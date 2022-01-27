@@ -10,16 +10,18 @@ namespace ToDo.Models
     {
         [Key]
         public int TaskId { get; set; }
+
         [ForeignKey("User")]
         public int UserId { get; set; }
+
         [StringLength(500)]
         [Required]
         public string Description { get; set; }
-        [Required]
+
         public DateTime DueDate { get; set; }
+
         [Required]
         public bool IsComplete { get; set; }
-
 
         public User User { get; set; }
     }

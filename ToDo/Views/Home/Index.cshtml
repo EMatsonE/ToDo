@@ -1,8 +1,21 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model IEnumerable<User>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h2>Login</h2>
+<form method="post" action="/home/index">
+    @Html.DisplayNameFor(model => model.Email)
+    <input type="text" name="Email" /><br />
+    @Html.DisplayNameFor(model => model.Password)
+    <input type="text" name="Password" /><br />
+    <input type="submit" />
+</form>
+<hr />
+
+
+<h2>Are you a New User?</h2>
+<form method="post" action="/home/SaveUser">
+    @Html.DisplayNameFor(model => model.Email)
+    <input type="text" name="Email" /><br />
+    @Html.DisplayNameFor(model => model.Password)
+    <input type="text" name="Password" /><br />
+    <input type="submit" />
+</form>

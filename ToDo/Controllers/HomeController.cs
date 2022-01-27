@@ -18,9 +18,33 @@ namespace ToDo.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string email, string password)
         {
-            return View();
+            List<User> result = null;
+            using (TodoContext context = new TodoContext())
+            {
+                result = context.User.ToList();
+                if (result.Contains(x => x.Email == email))
+                {
+
+                }
+                else
+                {
+                    return View("Error");
+                }
+            }
+
+            return View(result);
+        }
+
+        public IActionResult SaveUser(User user)
+        {
+            using (TodoContext context = new TodoContext())
+            {
+                context.User.Add(user);
+                context.SaveChanges();
+            }
+            return Redirect("/");
         }
 
         public IActionResult Privacy()
