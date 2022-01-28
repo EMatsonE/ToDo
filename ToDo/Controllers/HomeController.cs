@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using ToDo.Models;
 
 namespace ToDo.Controllers
@@ -18,24 +18,102 @@ namespace ToDo.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index(string email, string password)
+        public IActionResult Index()
         {
             List<User> result = null;
             using (TodoContext context = new TodoContext())
             {
                 result = context.User.ToList();
-                if (result.Contains(x => x.Email == email))
-                {
+            }
 
+            return View(result);
+        }
+
+        public IActionResult Welcome()
+        {
+            List<UserTask> result = null;
+            using (TodoContext context = new TodoContext())
+            {
+                result = context.Task.ToList();
+            }
+            if (result.Count() == 0)
+            {
+                return View("Create");
+            }
+            else
+            {
+                return View(result);
+            }
+        }
+
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(UserTask userTask, IFormCollection collection)
+        {
+            try
+            {
+                using (TodoContext context = new TodoContext())
+                {
+                    context.Task.Add(userTask);
+                    context.SaveChanges();
+                }
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View("Error");
+            }
+        }
+
+        //public IActionResult Delete()
+        //{
+
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult Delete()
+        //{
+
+        //}
+
+        //public IActionResult Edit()
+        //{
+
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult Edit()
+        //{
+
+        //}
+
+
+        public IActionResult UserCheck(string email, string password)
+        {
+            List<User> result = null;
+            using (TodoContext context = new TodoContext())
+            {
+                result = context.User.ToList();
+                if (result.Any(x => x.Email == email && x.Password == password))
+                {
+                    return View("Welcome");
                 }
                 else
                 {
                     return View("Error");
                 }
             }
-
-            return View(result);
         }
+
 
         public IActionResult SaveUser(User user)
         {

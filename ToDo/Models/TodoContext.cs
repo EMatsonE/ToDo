@@ -9,7 +9,7 @@ namespace ToDo.Models
     public class TodoContext: DbContext
     {
         public DbSet<User> User { get; set; }
-        public DbSet<Task> Task { get; set; }
+        public DbSet<UserTask> Task { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Todo;Trusted_Connection=True;");

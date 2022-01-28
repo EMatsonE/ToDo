@@ -19,6 +19,6 @@ namespace ToDo.Models
         [Required]
         public string Password { get; set; }
 
-        public ICollection<Task> Task { get; set; }
+        public ICollection<UserTask> UserTask { get; set; }
     }
 }

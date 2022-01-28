@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ToDo.Models;
 
 namespace ToDo.Migrations
 {
     [DbContext(typeof(TodoContext))]
-    partial class TodoContextModelSnapshot : ModelSnapshot
+    [Migration("20220128022931_doobadoo")]
+    partial class doobadoo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -72,7 +74,7 @@ namespace ToDo.Migrations
             modelBuilder.Entity("ToDo.Models.UserTask", b =>
                 {
                     b.HasOne("ToDo.Models.User", "User")
-                        .WithMany("UserTask")
+                        .WithMany("Task")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -82,7 +84,7 @@ namespace ToDo.Migrations
 
             modelBuilder.Entity("ToDo.Models.User", b =>
                 {
-                    b.Navigation("UserTask");
+                    b.Navigation("Task");
                 });
 #pragma warning restore 612, 618
         }
